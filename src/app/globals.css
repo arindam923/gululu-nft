@@ -124,3 +124,7 @@
 .shadow-neo {
   box-shadow: 3px 3px 0px 0px rgba(26, 26, 26);
 }
+
+.shadow-neo-sm {
+  box-shadow: 2px 2px 0px 0px rgba(26, 26, 26);
+}

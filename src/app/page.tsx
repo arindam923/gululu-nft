@@ -1,10 +1,16 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { cn, racing, spicy } from "@/lib/utils";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 export default function WelcomeScreen() {
+  const { isConnected } = useAccount();
+
   return (
     <div>
       <Header />
@@ -42,7 +48,7 @@ export default function WelcomeScreen() {
               <br />
               <span
                 className={cn(
-                  "text-[44px] md:text-6xl lg:text-9xl tracking-normal leading-6 md:leading-8 lg:leading-10 xl:leading-20",
+                  "text-[44px] md:text-6xl lg:text-9xl tracking-normal leading-6  md:leading-8 lg:leading-18 xl:leading-20",
                   racing.className
                 )}
               >
@@ -51,17 +57,26 @@ export default function WelcomeScreen() {
             </h1>
             <p
               className={cn(
-                "text-[10px] md:text-xs lg:text-base xl:text-xl text-white font-black mb-1 lg:mb-2 xl:mb-4",
+                "text-[10px] md:text-xs lg:text-base xl:text-xl text-black font-black mb-1 lg:mb-2 xl:mb-4",
                 spicy.className
               )}
             >
-              Burn Your Ridiculous Dragons And Nomaimai
+              Swap Your Ridiculous Dragons And Nomaimai
               <br />
               NFTs For Gululu Points
             </p>
-            <Button className="bg-[#ffdcaf] hover:bg-[#e7c393] text-black scale-90 lg:scale-100 xl:scale-110 text-[10px] md:text-xs lg:text-sm xl:text-xl h-6 md:h-8 lg:h-10 xl:h-12 rounded-lg px-4 lg:px-6 xl:px-8 border-2 border-black shadow-neo">
-              JOIN NOW
-            </Button>
+            {!isConnected && (
+              <ConnectButton.Custom>
+                {(props) => (
+                  <Button
+                    onClick={props.openConnectModal}
+                    className="bg-[#ffdcaf] hover:bg-[#e7c393] text-black scale-90 lg:scale-100 xl:scale-110 text-[10px] md:text-xs lg:text-sm xl:text-xl h-6 md:h-8 lg:h-10 xl:h-12 rounded-lg px-4 lg:px-6 xl:px-8 border-2 border-black shadow-neo"
+                  >
+                    Connect Wallet
+                  </Button>
+                )}
+              </ConnectButton.Custom>
+            )}
           </div>
         </div>
 
@@ -127,7 +142,7 @@ export default function WelcomeScreen() {
                 <p className="text-[10px] lg:text-sm xl:text-2xl leading-tight text-black">
                   Choose an NFT from your collection
                   <br />
-                  that you want to burn.
+                  that you want to swap.
                 </p>
               </div>
             </CardContent>
@@ -137,10 +152,10 @@ export default function WelcomeScreen() {
             <CardContent className="px-2 lg:px-4 xl:px-20 py-0 lg:py-3 xl:py-5 flex items-center gap-4 lg:gap-6 xl:gap-8">
               <div className="flex-1">
                 <h3 className="font-bold text-black text-sm lg:text-4xl xl:text-6xl">
-                  Burn & Analyse
+                  Swap & Analyse
                 </h3>
                 <p className="text-[10px] lg:text-sm xl:text-2xl leading-tight text-black">
-                  Burn the NFT and we analyse its
+                  Swap the NFT and we analyse its
                   <br />
                   metadata for rarity.
                 </p>

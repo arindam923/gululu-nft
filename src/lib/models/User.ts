@@ -4,6 +4,9 @@ import mongoose, { Schema } from 'mongoose';
 export interface IUser {
   walletAddress: string;
   points: number;
+  email?: string;
+  termsAgreed?: boolean;
+  termsAgreedAt?: Date;
   updatedAt: Date;
 }
 
@@ -12,6 +15,9 @@ const UserSchema = new Schema<IUser>(
   {
     walletAddress: { type: String, required: true, unique: true, index: true },
     points: { type: Number, required: true, default: 0 },
+    email: { type: String, sparse: true },
+    termsAgreed: { type: Boolean, default: false },
+    termsAgreedAt: { type: Date },
     updatedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
