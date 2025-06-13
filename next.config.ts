@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+
   images: {
     remotePatterns: [
       {
@@ -15,7 +16,7 @@ const nextConfig: NextConfig = {
       'gateway.pinata.cloud',
       'cloudflare-ipfs.com',
     ],
-    unoptimized: true, // For IPFS images
+    unoptimized: true, 
   },
 };
 
