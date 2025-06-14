@@ -1,5 +1,6 @@
 import { MailCheck } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
@@ -32,12 +33,12 @@ const Footer = () => {
         </p>
         <p className="mt-2 text-[9px] font-bold md:text-xs mb-4">
           All Rights Reserved |{" "}
-          <a
-            href="https://gululu.io/terms"
+          <Link
+            href="/terms"
             className="text-[#4a90e2] font-bold hover:underline"
           >
             Terms and Conditions
-          </a>{" "}
+          </Link>{" "}
           |{" "}
           <a
             href="https://gululu.io/privacy"

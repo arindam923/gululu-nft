@@ -589,9 +589,7 @@ export default function SwapNftsScreen() {
                       )}
                     </div>
 
-                    {/* Content section - 30% of card height */}
                     <div className="lg:h-[30%] h-[34%]  flex relative">
-                      {/* Left side - Collection name (vertical) */}
                       <div className="w-10 border-r-2 border-black flex items-center justify-center relative">
                         <div className="absolute transform -rotate-90 whitespace-nowrap text-sm md:text-sm lg:text-base font-bold text-black tracking-tight">
                           {nft.name.length > 12

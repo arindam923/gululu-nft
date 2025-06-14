@@ -1,26 +1,27 @@
 "use client";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Wallet, Flame, LogOut } from "lucide-react";
+import { Wallet, LogOut } from "lucide-react";
 import Link from "next/link";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useUserPoints } from "@/lib/hooks/useUserPoints";
 
 const Header = () => {
-  const { address, isConnected } = useAccount();
-  const { connect } = useConnect();
+  const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const router = useRouter();
   const { points, isLoading } = useUserPoints();
 
+  const pathname = usePathname();
+
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected && pathname === "/") {
       router.push("/swap");
     }
-  }, [isConnected, router]);
+  }, [isConnected, router, pathname]);
 
   const handlePointsClick = () => {
     router.push("/swap");
