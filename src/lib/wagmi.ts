@@ -2,6 +2,14 @@ import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { bsc } from 'wagmi/chains';
 import {
   metaMaskWallet,
+  trustWallet,
+  binanceWallet,
+  coinbaseWallet,
+  walletConnectWallet,
+  injectedWallet,
+  braveWallet,
+  coin98Wallet,
+  safeWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
 export const config = getDefaultConfig({
@@ -11,7 +19,22 @@ export const config = getDefaultConfig({
   wallets: [
     {
       groupName: 'Recommended',
-      wallets: [metaMaskWallet],
+      wallets: [
+        metaMaskWallet,
+        trustWallet,
+        binanceWallet,
+        coinbaseWallet,
+        braveWallet,
+        coin98Wallet,
+      ],
+    },
+    {
+      groupName: 'Other',
+      wallets: [
+        walletConnectWallet,
+        injectedWallet,
+        safeWallet,
+      ],
     },
   ],
   ssr: true, 
