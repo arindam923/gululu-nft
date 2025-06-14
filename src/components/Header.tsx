@@ -68,7 +68,7 @@ const Header = () => {
             </Button>
             <Button
               onClick={handleDisconnect}
-              className="bg-[#ffdcaf] ml-5 hover:bg-[#e7c393] text-black scale-90 lg:scale-100 xl:scale-110 text-[10px] md:text-xs lg:text-sm xl:text-xl h-6 md:h-8 lg:h-10 xl:h-12 rounded-lg px-4 lg:px-6 xl:px-8 border-2 border-black shadow-neo"
+              className="bg-[#ffdcaf] lg:ml-5 ml-1 hover:bg-[#e7c393] text-black scale-90 lg:scale-100 xl:scale-110 text-[10px] md:text-xs lg:text-sm xl:text-xl h-6 md:h-8 lg:h-10 xl:h-12 rounded-lg px-4 lg:px-6 xl:px-8 border-2 border-black shadow-neo"
             >
               <LogOut className="w-4 h-4 mr-1" />
               Disconnect

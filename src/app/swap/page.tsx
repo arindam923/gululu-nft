@@ -489,7 +489,7 @@ export default function SwapNftsScreen() {
             alt=""
             width={400}
             height={600}
-            className="absolute top-0 right-0 w-48 lg:w-64 xl:w-80 lg:top-0 xl:top-0"
+            className="absolute top-[80%] -right-2 w-24 h-auto lg:w-48 xl:w-64 lg:top-0 xl:top-0 lg:right-0"
           />
 
           <div className="text-center mx-auto max-w-3xl px-4 z-10">
@@ -521,7 +521,7 @@ export default function SwapNftsScreen() {
             alt=""
             width={800}
             height={600}
-            className="absolute top-0 left-0 w-48 lg:w-64 xl:w-80 lg:top-0 xl:top-0"
+            className="absolute top-[80%] -left-2 w-24 h-auto lg:w-48 xl:w-64 lg:top-0 xl:top-0 lg:left-0"
           />
         </div>
 
@@ -590,7 +590,7 @@ export default function SwapNftsScreen() {
                     </div>
 
                     {/* Content section - 30% of card height */}
-                    <div className="h-[30%] flex relative">
+                    <div className="lg:h-[30%] h-[34%]  flex relative">
                       {/* Left side - Collection name (vertical) */}
                       <div className="w-10 border-r-2 border-black flex items-center justify-center relative">
                         <div className="absolute transform -rotate-90 whitespace-nowrap text-sm md:text-sm lg:text-base font-bold text-black tracking-tight">
@@ -616,7 +616,7 @@ export default function SwapNftsScreen() {
                         </div>
 
                         {/* Bottom section with price and swap button */}
-                        <div className="border-t border-black pt-2 mt-2">
+                        <div className="border-t  border-black pt-2 mt-2">
                           <div className="flex flex-col items-end space-y-2">
                             <p className="text-sm md:text-sm lg:text-base font-medium text-black tracking-tight">
                               POINTS:{" "}
@@ -626,7 +626,7 @@ export default function SwapNftsScreen() {
                               )}
                             </p>
                             <Button
-                              className="bg-white hover:bg-gray-100 text-black border-2 border-black font-bold text-sm md:text-sm lg:text-base py-2 px-6 h-10 rounded-md shadow-neo"
+                              className="bg-white hover:bg-gray-100 text-black border-2 border-black font-bold text-sm md:text-sm lg:text-base md:py-2 md:px-6 h-10 rounded-md shadow-neo"
                               onClick={() => handleSwapNFT(nft)}
                               disabled={
                                 burningNft ===
