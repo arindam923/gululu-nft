@@ -28,21 +28,21 @@ export const BurnConfirmationEmail: React.FC<BurnConfirmationEmailProps> = ({
         color: "#000",
       }}
     >
-      {/* <div
+      <div
         style={{
           textAlign: "center",
           marginBottom: "30px",
         }}
       >
         <img
-          src="/LOGOy2 1.png"
+          src="https://gululu-bucket.s3.ap-south-1.amazonaws.com/LOGOy2+1.png"
           alt="GULULU Logo"
           style={{
             width: "220px",
             height: "auto",
           }}
         />
-      </div> */}
+      </div>
 
       <div
         style={{

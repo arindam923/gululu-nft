@@ -7,11 +7,12 @@ import { cn, racing, spicy } from "@/lib/utils";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getUserNFTs } from "@/lib/moralis";
 import { transferNFTToBurnAddress } from "@/lib/nftTransfer";
 import { toast } from "sonner";
 import { useUserPoints } from "@/lib/hooks/useUserPoints";
+import { useRouter } from "next/navigation";
 
 interface NFT {
   tokenId: string;
@@ -94,6 +95,7 @@ const getRarityLabel = (tokenId: string, contractAddress: string): string => {
 
 export default function SwapNftsScreen() {
   const { address, isConnected } = useAccount();
+  const router = useRouter();
   const [nfts, setNfts] = useState<NFT[]>([]);
   const [displayedNfts, setDisplayedNfts] = useState<NFT[]>([]);
   const [loading, setLoading] = useState(false);
@@ -103,6 +105,7 @@ export default function SwapNftsScreen() {
   const [termsAgreed, setTermsAgreed] = useState(false);
   const [pendingSwapNft, setPendingSwapNft] = useState<NFT | null>(null);
   const [hasMoreNfts, setHasMoreNfts] = useState(false);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const { updatePoints, refetch } = useUserPoints();
 
   // Check if user has already agreed to terms
@@ -272,7 +275,6 @@ export default function SwapNftsScreen() {
       });
 
       if (response.ok) {
-       
         setShowEmailForm(false);
         processSwapNFT(pendingSwapNft, email);
       } else {
@@ -346,130 +348,132 @@ export default function SwapNftsScreen() {
     fetchNFTs();
   }, [isConnected, address]);
 
-  if (!isConnected) {
-    return (
-      <>
-        <Header />
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-black mb-4">
-              Connect Your Wallet
-            </h2>
-            <p className="text-black">
-              Please connect your wallet to view and swap your NFTs
-            </p>
-          </div>
-        </div>
-      </>
-    );
-  }
+  // Redirect to home page when wallet disconnects
+  useEffect(() => {
+    if (!isConnected) {
+      router.push("/");
+    }
+  }, [isConnected, router]);
 
   // Email and Terms Agreement Form
-  const EmailForm = () => (
-    <div className="fixed inset-0  bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50">
-      <div className="bg-[#ffd6a0] p-6 rounded-none shadow-neo max-w-md w-full border-2 border-black relative">
-        <h3
-          className={cn(
-            "text-2xl font-bold text-black mb-2 text-center",
-            racing.className
-          )}
-        >
-          COMPLETE YOUR INFORMATION
-        </h3>
+  const EmailForm = () => {
+    // Focus the email input when the form is shown
+    useEffect(() => {
+      if (emailInputRef.current) {
+        emailInputRef.current.focus();
+      }
+    }, []);
 
-        <p
-          className={cn("text-sm text-black mb-6 text-center", spicy.className)}
-        >
-          Provide Your Email And Agree To Our Terms Before Swapping Your NFT
-        </p>
+    return (
+      <div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50">
+        <div className="bg-[#ffd6a0] p-6 rounded-none shadow-neo max-w-md w-full border-2 border-black relative">
+          <h3
+            className={cn(
+              "text-2xl font-bold text-black mb-2 text-center",
+              racing.className
+            )}
+          >
+            COMPLETE YOUR INFORMATION
+          </h3>
 
-        <form
-          onSubmit={handleEmailSubmit}
-          className="border-t-2 border-black pt-4"
-        >
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className={cn(
-                "block text-sm font-bold text-black mb-1",
-                spicy.className
-              )}
-            >
-              EMAIL ADDRESS
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border-2 border-black bg-white shadow-neo-sm rounded-none focus:outline-none focus:ring-2 focus:ring-orange-500"
-              required
-            />
-          </div>
+          <p
+            className={cn(
+              "text-sm text-black mb-6 text-center",
+              spicy.className
+            )}
+          >
+            Provide Your Email And Agree To Our Terms Before Swapping Your NFT
+          </p>
 
-          <div className="mb-6">
-            <label className="flex items-start">
+          <form
+            onSubmit={handleEmailSubmit}
+            className="border-t-2 border-black pt-4"
+          >
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className={cn(
+                  "block text-sm font-bold text-black mb-1",
+                  spicy.className
+                )}
+              >
+                EMAIL ADDRESS
+              </label>
               <input
-                type="checkbox"
-                checked={termsAgreed}
-                onChange={(e) => setTermsAgreed(e.target.checked)}
-                className="mt-1 mr-2 border-2 border-black"
+                type="email"
+                id="email"
+                ref={emailInputRef}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border-2 border-black bg-white shadow-neo-sm rounded-none focus:outline-none focus:ring-2 focus:ring-orange-500"
                 required
               />
-              <span className={cn("text-sm text-black", spicy.className)}>
-                I Agree To The{" "}
-                <a
-                  href="/terms"
-                  target="_blank"
-                  className="text-orange-600 hover:underline font-bold"
-                >
-                  TERMS AND CONDITIONS
-                </a>{" "}
-                AND{" "}
-                <a
-                  href="/privacy"
-                  target="_blank"
-                  className="text-orange-600 hover:underline font-bold"
-                >
-                  PRIVACY POLICY
-                </a>
-              </span>
-            </label>
-          </div>
+            </div>
 
-          <div className="flex justify-between pt-2 border-t-2 border-black">
-            <button
-              type="button"
-              onClick={() => {
-                setShowEmailForm(false);
-                setPendingSwapNft(null);
-              }}
-              className={cn(
-                "px-4 py-2 bg-white text-black border-2 border-black font-bold rounded-none shadow-neo hover:bg-gray-100 transition-colors",
-                spicy.className
-              )}
-            >
-              CANCEL
-            </button>
-            <button
-              type="submit"
-              className={cn(
-                "px-4 py-2 bg-gradient-to-b from-yellow-400 to-orange-400 text-black border-2 border-black font-bold rounded-none shadow-neo hover:from-yellow-500 hover:to-orange-500 transition-colors",
-                spicy.className
-              )}
-            >
-              SUBMIT & SWAP NFT
-            </button>
-          </div>
-        </form>
+            <div className="mb-6">
+              <label className="flex items-start">
+                <input
+                  type="checkbox"
+                  checked={termsAgreed}
+                  onChange={(e) => setTermsAgreed(e.target.checked)}
+                  className="mt-1 mr-2 border-2 border-black"
+                  required
+                />
+                <span className={cn("text-sm text-black", spicy.className)}>
+                  I Agree To The{" "}
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    className="text-orange-600 hover:underline font-bold"
+                  >
+                    TERMS AND CONDITIONS
+                  </a>{" "}
+                  AND{" "}
+                  <a
+                    href="/privacy"
+                    target="_blank"
+                    className="text-orange-600 hover:underline font-bold"
+                  >
+                    PRIVACY POLICY
+                  </a>
+                </span>
+              </label>
+            </div>
+
+            <div className="flex justify-between pt-2 border-t-2 border-black">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEmailForm(false);
+                  setPendingSwapNft(null);
+                }}
+                className={cn(
+                  "px-4 py-2 bg-white text-black border-2 border-black font-bold rounded-none shadow-neo hover:bg-gray-100 transition-colors",
+                  spicy.className
+                )}
+              >
+                CANCEL
+              </button>
+              <button
+                type="submit"
+                className={cn(
+                  "px-4 py-2 bg-gradient-to-b from-yellow-400 to-orange-400 text-black border-2 border-black font-bold rounded-none shadow-neo hover:from-yellow-500 hover:to-orange-500 transition-colors",
+                  spicy.className
+                )}
+              >
+                SUBMIT & SWAP NFT
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <>
       <Header />
-      {showEmailForm && <EmailForm />}
+      {showEmailForm && <EmailForm key="email-form" />}
       <Image
         src={"/bg2.png"}
         alt=""
@@ -498,7 +502,7 @@ export default function SwapNftsScreen() {
                 racing.className
               )}
             >
-              swap nfts
+              swap <span>NFT</span>s
             </h1>
             <p
               className={cn(
