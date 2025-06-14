@@ -35,7 +35,7 @@ export async function sendBurnConfirmationEmail(data: BurnConfirmationEmailData)
 
     // Send the email
     const { data: emailData, error } = await resend.emails.send({
-      from: 'success@gululu.io',
+      from: 'noreply@gululu.io',
       to: data.email,
       subject: 'NFT Swap Confirmation - Gululand',
       html,
