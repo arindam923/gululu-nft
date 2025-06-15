@@ -154,7 +154,7 @@ export default function WelcomeScreen() {
                 <h3 className="font-bold text-black text-sm lg:text-4xl xl:text-6xl">
                   Swap & Analyse
                 </h3>
-                <p className="text-[10px] lg:text-sm xl:text-2xl leading-tight text-black">
+                <p className="text-[10px] lg:mt-4 lg:text-sm xl:text-2xl leading-tight text-black">
                   Swap the NFT and we analyse its
                   <br />
                   metadata for rarity.
