@@ -33,9 +33,9 @@ const calculateRarityPoints = (
     contractAddress.toLowerCase() ===
     "0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb".toLowerCase()
   ) {
-    if (tokenNumber >= 1951 && tokenNumber <= 10000) {
+    if (tokenNumber >= 9501 && tokenNumber <= 10000) {
       return 10; // Legendary - 500 NFTs
-    } else if (tokenNumber >= 8001 && tokenNumber <= 1950) {
+    } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
       return 5; // Epic - 1500 NFTs
     } else if (tokenNumber >= 5001 && tokenNumber <= 8000) {
       return 3; // Rare - 3000 NFTs
@@ -49,9 +49,9 @@ const calculateRarityPoints = (
     contractAddress.toLowerCase() ===
     "0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1".toLowerCase()
   ) {
-    if (tokenNumber >= 1 && tokenNumber <= 3500) {
+    if (tokenNumber >= 1 && tokenNumber <= 3600) {
       return 1;
-    } else if (tokenNumber >= 3500 && tokenNumber <= 4000) {
+    } else if (tokenNumber >= 3601 && tokenNumber <= 4000) {
       return 10;
     }
   }
@@ -67,9 +67,9 @@ const getRarityLabel = (tokenId: string, contractAddress: string): string => {
     contractAddress.toLowerCase() ===
     "0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb".toLowerCase()
   ) {
-    if (tokenNumber >= 1951 && tokenNumber <= 10000) {
+    if (tokenNumber >= 9501 && tokenNumber <= 10000) {
       return "Legendary";
-    } else if (tokenNumber >= 8001 && tokenNumber <= 1950) {
+    } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
       return "Epic";
     } else if (tokenNumber >= 5001 && tokenNumber <= 8000) {
       return "Rare";
@@ -83,9 +83,9 @@ const getRarityLabel = (tokenId: string, contractAddress: string): string => {
     contractAddress.toLowerCase() ===
     "0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1".toLowerCase()
   ) {
-    if (tokenNumber >= 1 && tokenNumber <= 3500) {
+    if (tokenNumber >= 1 && tokenNumber <= 3600) {
       return "Common";
-    } else if (tokenNumber >= 3500 && tokenNumber <= 4000) {
+    } else if (tokenNumber >= 3601 && tokenNumber <= 4000) {
       return "Legendary";
     }
   }
@@ -201,18 +201,11 @@ export default function SwapNftsScreen() {
             )
           );
 
-          // Update user points
-          updatePoints({
-            walletAddress: address,
-            points: pointsReceived,
-            action: "add",
-          });
-
           toast.success(
             `Successfully swapped NFT and received ${pointsReceived} points!`
           );
 
-          // Refetch points to update UI
+          // Refetch points to update UI (API already updated points)
           refetch();
         } else {
           const errorData = await response.json();
