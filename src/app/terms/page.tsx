@@ -43,7 +43,7 @@ export default function TermsAndConditionsPage() {
                 </span>
                 <p className="mt-2">
                   By participating in the $GULULU redemption program, you (the
-                  "Participant") acknowledge that you are doing so voluntarily
+                  &quot;Participant&quot;) acknowledge that you are doing so voluntarily
                   and without any compulsion or coercion. The swap of your
                   existing NFTs (e.g., Ridiculous Dragons, NoMaiMai) for $GULULU
                   tokens is a goodwill initiative by the Project, and not a
@@ -136,7 +136,7 @@ export default function TermsAndConditionsPage() {
                   Redemption is available only to verified wallets holding
                   original NFTs as per a snapshot taken on [insert snapshot
                   date]. Fraudulent claims or duplicate submissions will be
-                  disqualified at the Project's discretion.
+                  disqualified at the Project&apos;s discretion.
                 </p>
               </div>
               <div className="border-t-2 border-black pt-6">
