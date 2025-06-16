@@ -74,7 +74,7 @@ export const BurnConfirmationEmail: React.FC<BurnConfirmationEmailProps> = ({
             fontWeight: "500",
           }}
         >
-          Congratulations! You have successfully burned your NFT and received
+          Congratulations! You have successfully swapped your NFT and received
           points.
         </p>
 
@@ -117,7 +117,7 @@ export const BurnConfirmationEmail: React.FC<BurnConfirmationEmailProps> = ({
               textTransform: "uppercase",
             }}
           >
-            Burn Details
+            Swap Details
           </h2>
 
           <table
@@ -195,7 +195,7 @@ export const BurnConfirmationEmail: React.FC<BurnConfirmationEmailProps> = ({
               border: "1px solid #FF6B00",
             }}
           >
-            Burn More NFTs
+            Swap More NFTs
           </a>
         </div>
       </div>
