@@ -153,7 +153,6 @@ export default function SwapNftsScreen() {
       );
 
       if (result.success) {
-        // Prepare the request body
         const requestBody: any = {
           walletAddress: address,
           nftDetails: {
@@ -165,7 +164,6 @@ export default function SwapNftsScreen() {
           pointsReceived,
         };
 
-        // Add email and terms agreement if provided
         if (userEmail) {
           requestBody.email = userEmail;
           requestBody.termsAgreed = true;
@@ -180,7 +178,6 @@ export default function SwapNftsScreen() {
         });
 
         if (response.ok) {
-          // Update the NFTs list
           const updatedNfts = nfts.filter(
             (item) =>
               !(
@@ -204,8 +201,6 @@ export default function SwapNftsScreen() {
           toast.success(
             `Successfully swapped NFT and received ${pointsReceived} points!`
           );
-
-          // Refetch points to update UI (API already updated points)
           refetch();
         } else {
           const errorData = await response.json();
@@ -218,33 +213,27 @@ export default function SwapNftsScreen() {
       console.error("Error swapping NFT:", error);
       toast.error("An error occurred while swapping the NFT");
     } finally {
-      // Clear the swapping state
       setSwappingNft(null);
       setPendingSwapNft(null);
     }
   };
 
-  // Initial handler for swap button click
   const handleSwapNFT = async (nft: NFT) => {
     if (!address) {
       toast.error("Please connect your wallet");
       return;
     }
 
-    // Check if user has already agreed to terms
     const hasAgreedToTerms = await checkUserTermsAgreement(address);
 
     if (hasAgreedToTerms) {
-      // If already agreed, proceed with swap
       processSwapNFT(nft);
     } else {
-      // If not agreed, show the email form
       setPendingSwapNft(nft);
       setShowEmailForm(true);
     }
   };
 
-  // Handle email form submission
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -253,7 +242,6 @@ export default function SwapNftsScreen() {
       return;
     }
 
-    // Save user email and terms agreement
     try {
       const response = await fetch("/api/users/update", {
         method: "POST",
@@ -308,14 +296,9 @@ export default function SwapNftsScreen() {
           const userNFTs = await getUserNFTs(address);
           setNfts(userNFTs);
 
-          // Set initial displayed NFTs (first 6)
           const initialNfts = userNFTs.slice(0, 6);
           setDisplayedNfts(initialNfts);
-
-          // Check if there are more NFTs to load
           setHasMoreNfts(userNFTs.length > 6);
-
-          // Preload images for better performance
           preloadImages(userNFTs);
         } catch (error) {
           console.error("Error fetching NFTs:", error);
