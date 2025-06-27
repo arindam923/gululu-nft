@@ -68,13 +68,13 @@ const getRarityLabel = (tokenId: string, contractAddress: string): string => {
     "0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb".toLowerCase()
   ) {
     if (tokenNumber >= 1 && tokenNumber <= 5000) {
-      return "Ridi - Common";
+      return "Common";
     } else if (tokenNumber >= 5001 && tokenNumber <= 8000) {
-      return "Ridi - Rare";
+      return "Rare";
     } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
-      return "Ridi - Epic";
+      return "Epic";
     } else if (tokenNumber >= 9501 && tokenNumber <= 10000) {
-      return "Ridi - Legendary";
+      return "Legendary";
     }
   }
 
@@ -84,9 +84,9 @@ const getRarityLabel = (tokenId: string, contractAddress: string): string => {
     "0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1".toLowerCase()
   ) {
     if (tokenNumber >= 1 && tokenNumber <= 3600) {
-      return "NMM - Normal";
+      return "Normal";
     } else if (tokenNumber >= 3601 && tokenNumber <= 4000) {
-      return "NMM - Animated";
+      return "Animated";
     }
   }
 
@@ -574,7 +574,7 @@ export default function SwapNftsScreen() {
                           <p className="text-sm md:text-sm lg:text-base font-bold text-black tracking-tight">
                             TOKEN: #{nft.tokenId}
                           </p>
-                          <p className="text-sm md:text-sm lg:text-base font-medium text-black tracking-tight mt-1">
+                          <p className="text-sm font-medium text-black tracking-tight mt-1">
                             RARITY:{" "}
                             <span className="font">
                               {getRarityLabel(nft.tokenId, nft.contractAddress)}
@@ -583,8 +583,8 @@ export default function SwapNftsScreen() {
                         </div>
 
                         {/* Bottom section with price and swap button */}
-                        <div className="border-t  border-black pt-2 mt-2">
-                          <div className="flex flex-col items-end space-y-2">
+                        <div className="border-t  border-black ">
+                          <div className="flex flex-col items-end space-y-1">
                             <p className="text-sm md:text-sm lg:text-base font-medium text-black tracking-tight">
                               POINTS:{" "}
                               {calculateRarityPoints(
