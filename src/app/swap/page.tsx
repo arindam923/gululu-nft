@@ -28,69 +28,69 @@ const calculateRarityPoints = (
 ): number => {
   const tokenNumber = parseInt(tokenId);
 
-  // Collection 1: 0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb
+  // Collection 1: 0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb (Ridi)
   if (
     contractAddress.toLowerCase() ===
     "0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb".toLowerCase()
   ) {
-    if (tokenNumber >= 9501 && tokenNumber <= 10000) {
-      return 10; // Legendary - 500 NFTs
-    } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
-      return 5; // Epic - 1500 NFTs
+    if (tokenNumber >= 1 && tokenNumber <= 5000) {
+      return 2940; // Ridi - Common
     } else if (tokenNumber >= 5001 && tokenNumber <= 8000) {
-      return 3; // Rare - 3000 NFTs
-    } else if (tokenNumber >= 1 && tokenNumber <= 5000) {
-      return 1; // Common - 5000 NFTs
+      return 5080; // Ridi - Rare
+    } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
+      return 7120; // Ridi - Epic
+    } else if (tokenNumber >= 9501 && tokenNumber <= 10000) {
+      return 16000; // Ridi - Legendary
     }
   }
 
-  // Collection 2: 0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1
+  // Collection 2: 0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1 (NMM)
   if (
     contractAddress.toLowerCase() ===
     "0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1".toLowerCase()
   ) {
     if (tokenNumber >= 1 && tokenNumber <= 3600) {
-      return 1;
+      return 6050; // NMM - Normal
     } else if (tokenNumber >= 3601 && tokenNumber <= 4000) {
-      return 10;
+      return 24000; // NMM - Animated
     }
   }
 
-  return 1;
+  return 0; // Default to 0 if not matching any type
 };
 
 const getRarityLabel = (tokenId: string, contractAddress: string): string => {
   const tokenNumber = parseInt(tokenId);
 
-  // Collection 1: 0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb
+  // Collection 1: 0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb (Ridi)
   if (
     contractAddress.toLowerCase() ===
     "0x521B674F91d818f7786F784dCCa2fc2b3121A6Bb".toLowerCase()
   ) {
-    if (tokenNumber >= 9501 && tokenNumber <= 10000) {
-      return "Legendary";
-    } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
-      return "Epic";
+    if (tokenNumber >= 1 && tokenNumber <= 5000) {
+      return "Ridi - Common";
     } else if (tokenNumber >= 5001 && tokenNumber <= 8000) {
-      return "Rare";
-    } else if (tokenNumber >= 1 && tokenNumber <= 5000) {
-      return "Common";
+      return "Ridi - Rare";
+    } else if (tokenNumber >= 8001 && tokenNumber <= 9500) {
+      return "Ridi - Epic";
+    } else if (tokenNumber >= 9501 && tokenNumber <= 10000) {
+      return "Ridi - Legendary";
     }
   }
 
-  // Collection 2: 0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1
+  // Collection 2: 0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1 (NMM)
   if (
     contractAddress.toLowerCase() ===
     "0x5099d14FBdc58039D68dB2eb4Fa3fa939da668B1".toLowerCase()
   ) {
     if (tokenNumber >= 1 && tokenNumber <= 3600) {
-      return "Common";
+      return "NMM - Normal";
     } else if (tokenNumber >= 3601 && tokenNumber <= 4000) {
-      return "Legendary";
+      return "NMM - Animated";
     }
   }
 
-  return "Common";
+  return "Unknown";
 };
 
 export default function SwapNftsScreen() {
@@ -186,8 +186,6 @@ export default function SwapNftsScreen() {
               )
           );
           setNfts(updatedNfts);
-
-          // Update displayed NFTs
           setDisplayedNfts((prev) =>
             prev.filter(
               (item) =>
@@ -268,7 +266,6 @@ export default function SwapNftsScreen() {
     }
   };
 
-  // Handle loading more NFTs when View More is clicked
   const handleViewMore = () => {
     const currentlyDisplayed = displayedNfts.length;
     const nextBatch = nfts.slice(currentlyDisplayed, currentlyDisplayed + 6);
@@ -278,7 +275,6 @@ export default function SwapNftsScreen() {
     setHasMoreNfts(currentlyDisplayed + 6 < nfts.length);
   };
 
-  // Preload images to improve loading performance
   const preloadImages = (nfts: NFT[]) => {
     nfts.forEach((nft) => {
       if (nft.image) {
@@ -324,16 +320,13 @@ export default function SwapNftsScreen() {
     fetchNFTs();
   }, [isConnected, address]);
 
-  // Redirect to home page when wallet disconnects
   useEffect(() => {
     if (!isConnected) {
       router.push("/");
     }
   }, [isConnected, router]);
 
-  // Email and Terms Agreement Form
   const EmailForm = () => {
-    // Focus the email input when the form is shown
     useEffect(() => {
       if (emailInputRef.current) {
         emailInputRef.current.focus();
